@@ -1,7 +1,8 @@
+from models.user import User
 from fastapi import APIRouter
-from config.db import conn
+from config.mongo import conn
 from schemas.user import userEntity, usersEntity
-
+from models.user import User
 user = APIRouter()
 
 @user.get('/users')
@@ -13,8 +14,10 @@ def getUsersById():
     return 'get user by id'
 
 @user.post('/users')
-def createUser():
-    return 'create user'
+def createUser(user: User):
+    newUser = dict(user)
+    id =conn.local.user.insert_one(newUser).inserted_id
+    return str(id)
 
 @user.delete('users/{id}')
 def deleteUserById():
