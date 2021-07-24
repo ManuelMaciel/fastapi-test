@@ -5,3 +5,6 @@ def userEntity(item) -> dict:
         "email": item["email"],
         "password": item["password"]
     }
+
+def usersEntity(entity) -> list:
+    [userEntity(item) for item in entity]

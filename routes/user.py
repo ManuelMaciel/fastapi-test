@@ -1,10 +1,12 @@
 from fastapi import APIRouter
+from config.db import conn
+from schemas.user import userEntity, usersEntity
 
 user = APIRouter()
 
 @user.get('/users')
 def getUsers():
-    return 'users'
+    return usersEntity(conn.local.user.find())
 
 @user.get('/user/{id}')
 def getUsersById():
